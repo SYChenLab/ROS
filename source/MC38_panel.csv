@@ -1,0 +1,7 @@
+lineage,CD90,CD137,,,,,,,,,,,,,,,,,,,,,,,,,,
+ROS,NNT,KEAP1,HSP70,PCYXL,PRDX4,SOD2,53bp1,GPX4,NRF2,PDI,HO1,MTH1,OLR1,CD36,catalase,ACOX3,AQP8,Ref_APE,ERO1B,QSOX1,oxPTP,oxDJ1,p53,CD163,,,,
+ROS2,NNT,KEAP1,HSP70,PCYXL,PRDX4,SOD2,,,NRF2,PDI,HO1,MTH1,,CD36,catalase,ACOX3,AQP8,Ref_APE,ERO1B,QSOX1,oxPTP,oxDJ1,p53,,Ab53bp1,GPX4,p38MAPK,GR
+signaling,mTOR,pS6,HIF1a,p38MAPK,pNFkB,pERK,c_Jun,,,,,,,,,,,,,,,,,,,,,
+signaling2,mTOR,pS6,HIF1a,,,,,,,,,,,,,,,,,,,,,,,,,
+exhaustion,TCF1_7,TOX,PD1,LAG3,TIM3,Tbet,,,,,,,,,,,,,,,,,,,,,,
+exhaustion2,TCF1_7,TOX,PD1,LAG3,TIM3,,,,,,,,,,,,,,,,,,,,,,,

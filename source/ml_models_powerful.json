@@ -1,0 +1,20 @@
+
+[
+  {
+    "name": "CatBoostClassifier",
+    "model": "CatBoostClassifier",
+    "module": "catboost",
+    "params": {
+      "loss_function": "MultiClass",
+      "custom_metric": ["Accuracy"],
+      "random_seed": 666,
+      "logging_level": "Verbose",
+      "eval_metric": "TotalF1",
+      "use_best_model": true,
+      "iterations": 1500,
+      "depth": 8
+    }
+  }
+]
+
+  

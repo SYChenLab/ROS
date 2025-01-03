@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> MLPlatform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.0/socket.io.min.js"></script>
+</head>
+
+
+<link rel="stylesheet" href="styles.css">
+
+
+<body>
+
+    <!-- navbar ----------------------->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./index.html">ML Platform</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./index.html">New Task</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./data.html">Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./upload.html">Upload Data </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="./tasks.html">Tasks Status </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--------------------------------->
+    <br>
+    <div class="center">
+        <div class="container mt-1">
+            <br>
+
+            <div class="accordion" id="accordionExample" style="width:80%">
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+
+    <script>
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        window.onload = function () {
+            const param = getUrlParameter('param');
+
+            if (param) {
+                fetch(`http://127.0.0.1:5000/get_ml_results/${param}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        displayResults(data);
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            } else {
+                console.error('No "param" found in the URL');
+            }
+        };
+
+        const createAccordionItem = (headerText, bodyContent, itemId, isFirstItem = false) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('accordion-item');
+
+            const headerDiv = document.createElement('h2');
+            headerDiv.classList.add('accordion-header');
+            headerDiv.id = `heading${itemId}`;
+            const button = document.createElement('button');
+            button.classList.add('accordion-button');
+            button.setAttribute('type', 'button');
+            button.setAttribute('data-bs-toggle', 'collapse');
+            button.setAttribute('data-bs-target', `#collapse${itemId}`);
+            button.setAttribute('aria-expanded', 'false');
+            button.setAttribute('aria-controls', `collapse${itemId}`);
+            button.textContent = headerText;
+            headerDiv.appendChild(button);
+            itemDiv.appendChild(headerDiv);
+            const collapseDiv = document.createElement('div');
+            collapseDiv.id = `collapse${itemId}`;
+
+            if (isFirstItem) {
+                collapseDiv.classList.add('accordion-collapse', 'collapse', 'show');
+            }
+            else {
+                collapseDiv.classList.add('accordion-collapse', 'collapse');
+            }
+            button.classList.add('bg-light', 'text-dark');
+            collapseDiv.setAttribute('aria-labelledby', `heading${itemId}`);
+            collapseDiv.setAttribute('data-bs-parent', '#accordionInfo');
+            const bodyDiv = document.createElement('div');
+            bodyDiv.classList.add('accordion-body');
+            bodyDiv.innerHTML = bodyContent;
+            collapseDiv.appendChild(bodyDiv);
+            itemDiv.appendChild(collapseDiv);
+
+            return itemDiv;
+        }
+
+        const accordionInfo = document.createElement('div');
+        accordionInfo.classList.add('accordion');
+        accordionInfo.id = 'accordionInfo';
+        accordionInfo.style = "text-align: left; margin-bottom: 10px;";
+        const generateAccordionContent = (item, infoDiv) => {
+            const projectNameContent = `${item.project_name}`;
+            const tasktimeContent = `${item.task_time}`;
+            const resultIdContent = `${item.result_id}`;
+            const nameContent = ` ${item.model_name}`;
+            const algorithmParamsContent = ` ${JSON.stringify(item.algorithm_params)}`;
+            const inputCsvContent = `${item.input_csv}`;
+            const inputCsvindexCol = `${item.input_index_col}`;
+            const randomSeed = `${item.random_seed}`;
+            let featuresContent = ``;
+            let dataArray = `${item.features}`.split(',');
+            featuresContent += dataArray.map(d => {
+                return `<span class="badge bg-light text-dark">${d}</span> `;
+            }).join('');
+
+            let targetContent = ` <span class="badge bg-light text-dark">${item.target}</span>`;
+            const accordionResultId = createAccordionItem('Result ID', resultIdContent, 3, false);
+            const accordionModelName = createAccordionItem('Model (Algorithm) Name', nameContent, 4, false);
+            const accordionAlgorithmParams = createAccordionItem('Model Hyper Parameters', algorithmParamsContent, 5, false);
+            const accordionInputCsv = createAccordionItem('Input CSV File', inputCsvContent, 6, false);
+            const accordionInputCsvindexCol = createAccordionItem('Input CSV Index Col', inputCsvindexCol, 6, false);
+            const accordionFeatures = createAccordionItem('Features Used', featuresContent, 7, false);
+            const accordionTarget = createAccordionItem('Target to Predict', targetContent, 8, false);
+            const accordionRandomSeed = createAccordionItem('Random Seed Used', randomSeed, 8, false);
+            accordionInfo.appendChild(accordionResultId);
+            accordionInfo.appendChild(accordionModelName);
+            accordionInfo.appendChild(accordionAlgorithmParams);
+            accordionInfo.appendChild(accordionInputCsv);
+            accordionInfo.appendChild(accordionInputCsvindexCol);
+            accordionInfo.appendChild(accordionFeatures);
+            accordionInfo.appendChild(accordionTarget);
+            accordionInfo.appendChild(accordionRandomSeed);
+            infoDiv.appendChild(accordionInfo);
+        }
+
+        function displayResults(data) {
+            const resultsContainer = document.getElementById('accordionExample');
+            resultsContainer.innerHTML = '';
+
+
+            data.forEach((item, index) => {
+                const accordionItem = document.createElement('div');
+                accordionItem.classList.add('accordion-item');
+                const accordionHeader = document.createElement('h2');
+                accordionHeader.classList.add('accordion-header');
+                accordionHeader.id = `heading${index}`;
+
+                const button = document.createElement('button');
+                button.classList.add('accordion-button');
+                button.setAttribute('type', 'button');
+                button.setAttribute('data-bs-toggle', 'collapse');
+                button.setAttribute('data-bs-target', `#collapse${index}`);
+                button.setAttribute('aria-expanded', 'true');
+                button.setAttribute('aria-controls', `collapse${index}`);
+                button.textContent = item.model_name;  
+                accordionHeader.appendChild(button);
+                const collapseDiv = document.createElement('div');
+                collapseDiv.id = `collapse${index}`;
+                collapseDiv.classList.add('accordion-collapse', 'collapse');
+                if (index === 0) collapseDiv.classList.add('show');  
+                collapseDiv.setAttribute('aria-labelledby', `heading${index}`);
+                collapseDiv.setAttribute('data-bs-parent', '#accordionExample');
+                const accordionBody = document.createElement('div');
+                accordionBody.classList.add('accordion-body');
+                //
+                const infoDiv = document.createElement('div');
+                infoDiv.style = "text-align: left; margin-bottom: 10px;";
+                //
+                const projectNameElement = document.createElement('strong');
+                projectNameElement.classList.add('accordion-header'); 
+                projectNameElement.textContent = `${item.project_name}`;
+                infoDiv.appendChild(projectNameElement);
+                infoDiv.appendChild(document.createElement('br'));
+                const tasktime = document.createElement('h6');
+                tasktime.classList.add('strong'); 
+                tasktime.textContent = `${item.task_time}`;
+                infoDiv.appendChild(tasktime);
+                infoDiv.appendChild(document.createElement('br'));
+                generateAccordionContent(item, infoDiv)
+                accordionBody.appendChild(infoDiv);
+                const imgBase64 = item.model_roc_curve;
+                const imgDiv = document.createElement('div');
+                imgDiv.style = "";
+                const imgElement = document.createElement('img');
+                imgElement.src = 'data:image/png;base64,' + imgBase64;
+                imgElement.style = "max-width: 100%; height: auto;";
+                imgDiv.appendChild(imgElement);
+                accordionBody.appendChild(imgDiv);
+
+                const csvData = item.model_accurancy;
+                const table = displayCSV(csvData);
+
+                // down load btn
+                const btnD = document.createElement('button');
+                btnD.classList.add('btn', 'btn-secondary');
+                btnD.classList.add('btn', 'btn-sm');
+                btnD.appendChild(document.createTextNode('Download Model'));
+                btnD.onclick = function () {
+
+                    window.open(item.model_url);
+                };
+                accordionBody.appendChild(table);
+                accordionBody.appendChild(btnD);
+                collapseDiv.appendChild(accordionBody);
+                accordionItem.appendChild(accordionHeader);
+                accordionItem.appendChild(collapseDiv);
+                resultsContainer.appendChild(accordionItem);
+            });
+        }
+
+        function displayCSV(csvData) {
+            const rows = csvData.split('\n');
+            let table = document.createElement('table');
+            table.classList.add('table', 'table-bordered', 'table-hover', 'table-sm', 'table-striped');
+
+            const headerRow = document.createElement('tr');
+            const headers = rows[0].split(',');
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            table.appendChild(headerRow);
+
+            for (let i = 1; i < rows.length - 1; i++) {
+                const cells = rows[i].split(',');
+                const row = document.createElement('tr');
+                cells.forEach(cell => {
+                    const td = document.createElement('td');
+                    const numericValue = parseFloat(cell);
+                    if (!isNaN(numericValue)) {
+                        td.textContent = numericValue.toFixed(2);
+                    } else {
+                        td.textContent = cell;
+                    }
+                    row.appendChild(td);
+                });
+                table.appendChild(row);
+            }
+
+            return table;
+        }
+    </script>
+
+    <br>
+    <br>
+    <br>
+    </div>
+</body>
+
+<div class="footer">
+    <p>ML Platform &copy; 2024</p>
+</div>
+
+</html>

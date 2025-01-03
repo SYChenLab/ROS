@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.navbar, .footer {
+    background-color: #333;
+    color: white;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    z-index: 10;
+}
+
+.navbar {
+    top: 0;
+    padding: 10px 20px;
+}
+
+.footer {
+    bottom: 0;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.center {
+    margin-top: 60px;
+    margin-bottom: 60px;
+    padding: 20px;
+    overflow-y: auto;
+    height: calc(100vh - 120px);
+}
+
+.center .content {
+    max-height: 100%;
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #62646393;
+    color: white;
+}
+
+.table td {
+    background-color: #f9f9f9;
+}
+
+.table tr:nth-child(even) td {
+    background-color: #f2f2f2;
+}
+
+.table tr:hover td {
+    background-color: #ddd;
+}
+
+.table-sm th, .table-sm td {
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+.badge {
+    border-radius: 5px !important;
+    margin-right: 1px;
+    margin-bottom: 1px;
+}
+
+.model-container {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.model-container:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.model-group {
+    margin: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.accordion {
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+.wrap-text {
+    word-wrap: break-word;
+    width: 100%;
+    white-space: normal;
+}
+
+.header-item span, .task-item span {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    text-overflow: ellipsis;
+    flex-basis: 20%;
+    text-align: center;
+}
+
+.task-item, .header-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.list-group-item {
+    min-height: 50px;
+}
+
+.status-center {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-width: 50px;
+    padding: 0.25rem 0.75rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    #task-card-body {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .task-item {
+        flex-wrap: wrap;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .badge {
+        font-size: 0.9rem;
+        margin: 5px 0;
+        flex: 1 1 100%;
+        text-align: center;
+    }
+
+    .task-item span {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .badge {
+        font-size: 0.8rem;
+    }
+
+    .task-item span {
+        font-size: 0.75rem;
+    }
+}
