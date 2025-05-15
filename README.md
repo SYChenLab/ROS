@@ -569,23 +569,31 @@ The whole training dataset and the machine learning models result can be downloa
 
 ## 6. Run Web Application
 
-We also created a web application as GUI for training machine learning models for classification. To use it need to
+We also created a web application as GUI for training machine learning models for classification. To use it
+
+step1. cd to path : 
 
 ```bash
 cd ./web_app
 ```
 
-run the Celery :
+step2. run the Celery queue:
 
 ```bash
 celery -A tasks.celery worker --loglevel=info --concurrency=4
 ```
-and run Flask api server  :
+
+step3. run run Flask api server :
 
 ```bash
 python server.py
 ```
 than will start the server at [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
-and vist  [index.html](./source/web_app/index.html) to use it.
+step4. and vist  [index.html](./source/web_app/index.html) to use it.
+
+
+The detail of web_app usage can be downlad at [here](./web_app/20241225_ML_Platform.pdf)
+
+
 
