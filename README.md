@@ -571,6 +571,8 @@ The whole training dataset and the machine learning models result can be downloa
 
 We also created a web application as GUI for training machine learning models for classification. To use it
 
+![image](./web_app/dashboad.png)
+
 step1. cd to path : 
 
 ```bash
@@ -594,6 +596,4 @@ step4. and vist  [index.html](./source/web_app/index.html) to use it.
 
 
 The detail of web_app usage can be downlad at [here](./web_app/20241225_ML_Platform.pdf)
-
-
 
