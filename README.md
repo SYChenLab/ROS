@@ -4,10 +4,15 @@
 
 This is the machine learning pipeline and web service of the research: 
 
-> Single-cell Reactive Oxygen Species Regulome Profiling Reveals Dynamic Redox Regulation in Immune Cells
-Yi-Chuan Wang; Ping-Hsun Wu; Wen-Chieh Ting; Yi-Fu Wang; Ming-Han Yang; Tung-Hung Su; Jia-Ying Su; Hsun-I Sun; Wei-Min Huang; Pei-Ling Tsai; Gerlinde Wernig; Shih-Lei Lai; Chia-Wei Li; Tai-Ming Ko; Kai-Chien Yang; Ya-Jen Chang; Yijuang Chern; Yao-Ming Chang; Mei-Chuan Kuo; Yen-Tsung Huang; Yi-Shiuan Tzeng; Shih-Yu Chen; Jih-Luh Tang.
+> [Single-cell Reactive Oxygen Species Regulome Profiling Reveals Dynamic Redox Regulation in Immune Cells
+Yi-Chuan Wang; Ping-Hsun Wu; Wen-Chieh Ting; Yi-Fu Wang; Ming-Han Yang; Tung-Hung Su; Jia-Ying Su; Hsun-I Sun; Wei-Min Huang; Pei-Ling Tsai; Gerlinde Wernig; Shih-Lei Lai; Chia-Wei Li; Tai-Ming Ko; Kai-Chien Yang; Ya-Jen Chang; Yijuang Chern; Yao-Ming Chang; Mei-Chuan Kuo; Yen-Tsung Huang; Yi-Shiuan Tzeng; Shih-Yu Chen; Jih-Luh Tang.](https://www.nature.com/articles/s41467-025-60727-z)
 
-to use the pipeline, please follow the steps below.
+If you use this pipeline, please cite :
+
+> Wang, YC., Wu, PH., Ting, WC. et al. Single-cell signaling network profiling during redox stress reveals dynamic redox regulation in immune cells. Nat Commun 16, 5600 (2025). https://doi.org/10.1038/s41467-025-60727-z
+
+
+To use the pipeline, please follow the steps below.
 
 ## Installation
 
